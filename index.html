@@ -6,7 +6,7 @@
 <meta name="description" content="Santiago Navarro Pulido — Desarrollador Fullstack de IA en Xalapa, Veracruz. Visión por computadora, agentes, apps móviles y tecnología accesible." />
 <title>Santiago Navarro Pulido — Desarrollador Fullstack de IA</title>
 <link rel="canonical" href="https://chantynp.github.io/" />
-<meta name="theme-color" content="#f6f1e7" />
+<meta name="theme-color" content="#141210" />
 <meta property="og:title" content="Santiago Navarro Pulido — Desarrollador Fullstack de IA" />
 <meta property="og:description" content="Visión por computadora, agentes, apps móviles y tecnología accesible. Xalapa, Veracruz, México." />
 <meta property="og:type" content="website" />
@@ -16,24 +16,49 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
 :root{
+  /* tema oscuro (principal) */
+  --paper:#141210;--card:#1e1a16;--ink:#f2ede4;--muted:#a99f8d;--line:#38312a;
+  --accent:#eda15a;--accent-ink:#f0b475;--accent-bg:#e89a4e;--accent-bg-hover:#f0ad67;--on-accent:#1b1815;
+  --stamp:#8ac475;--soft:#2a251f;--grid:#2a2620;--sheet-tint:#262019;--veil:rgba(20,18,16,.94);--link-line:rgba(237,161,90,.35);
+}
+:root[data-theme="light"]{
+  /* tema claro (secundario) */
   --paper:#f6f1e7;--card:#fffdf8;--ink:#1b1815;--muted:#6b6152;--line:#ddd3c0;
-  --accent:#b45309;--accent-ink:#8a3f07;--stamp:#3f6212;--soft:#e8e0d0;
+  --accent:#b45309;--accent-ink:#8a3f07;--accent-bg:#b45309;--accent-bg-hover:#8a3f07;--on-accent:#ffffff;
+  --stamp:#3f6212;--soft:#e8e0d0;--grid:#e3d9c6;--sheet-tint:#f4ede0;--veil:rgba(246,241,231,.94);--link-line:rgba(180,83,9,.3);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;line-height:1.6}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{background:transparent;color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;line-height:1.6}
 .serif{font-family:Fraunces,Georgia,serif}
 .mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 h1,h2,h3,h4{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0}
 p{margin:0 0 1rem}
-a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid rgba(180,83,9,.3)}
+a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid var(--link-line)}
 a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .container{max-width:880px;margin:0 auto;padding:0 20px}
 .skip{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .skip:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;padding:8px 12px;background:var(--ink);color:var(--paper);z-index:60}
 
-/* ---- topbar: estable, sin movimiento extraño ---- */
-.topbar{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line)}
+/* ---- fondo rotatorio (código → braille → íconos) ---- */
+.bgcycle{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bglayer{position:absolute;inset:0;opacity:0;transition:opacity 2s ease}
+.bglayer.active{opacity:1}
+.rain{position:absolute;inset:0;overflow:hidden}
+.rain-col{position:absolute;top:0;white-space:pre;font-family:"JetBrains Mono",monospace;font-size:12px;line-height:1.5;color:var(--ink);opacity:.08;animation:fall linear infinite;will-change:transform}
+@keyframes fall{from{transform:translateY(-50%)}to{transform:translateY(50%)}}
+.braille{position:absolute;inset:0;display:grid;opacity:.4}
+.bd{display:flex;align-items:center;justify-content:center}
+.bd i{width:7px;height:7px;border-radius:50%;background:var(--line);display:block}
+.bd.on i{background:var(--accent);animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.2;transform:scale(.85)}50%{opacity:.9;transform:scale(1.15)}}
+.gridbg{position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;opacity:.55}
+.float{position:absolute;color:var(--accent);opacity:.15;animation:floaty 7s ease-in-out infinite}
+.float svg{display:block;width:34px;height:34px}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+
+/* ---- topbar ---- */
+.topbar{position:sticky;top:0;z-index:40;background:var(--veil);border-bottom:1px solid var(--line)}
 .topbar .inner{max-width:880px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--ink)}
 .brand span{color:var(--muted);font-weight:400}
@@ -42,66 +67,71 @@ a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .nav-links a:hover{color:var(--accent)}
 .nav-links a.btn{color:var(--accent);border-bottom:none}
 
+main{position:relative;z-index:1}
+
 /* ---- cover ---- */
 .cover{padding:56px 0 40px}
 .cover .role{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .cover h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
-.cover .sub{color:var(--muted);font-size:1.05rem;max-width:48ch;margin-bottom:24px}
-.cover .cta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+.cover .sub{color:var(--ink);font-size:1.05rem;max-width:50ch;margin-bottom:24px}
+.cover .cta{display:flex;flex-wrap:wrap;gap:10px}
 .btn{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.04em;padding:9px 14px;border-radius:4px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
 .btn:hover{background:var(--soft)}
-.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn.primary:hover{background:var(--accent-ink)}
+.btn.primary{background:var(--accent-bg);color:var(--on-accent);border-color:var(--accent-bg)}
+.btn.primary:hover{background:var(--accent-bg-hover);border-color:var(--accent-bg-hover)}
 a.btn{border-bottom:1px solid transparent}
 a.btn:hover{border-bottom-color:transparent}
 
 /* ---- folder grid ---- */
 .folders-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
 .folders-head h2{font-size:1.2rem;font-weight:600}
-.folders-head .tools{display:flex;gap:8px;align-items:center}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 16px;padding-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 18px;padding:22px 0 8px}
 @media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}}
-.gfolder{position:relative;border:1.5px solid var(--ink);border-radius:6px;background:var(--card);padding:20px 14px 14px;cursor:pointer;text-align:left;font-family:inherit;transition:transform .15s}
-.gfolder:hover{transform:translateY(-2px)}
-.gfolder::before{content:"";position:absolute;top:-10px;left:12px;width:54px;height:10px;background:var(--card);border:1.5px solid var(--ink);border-bottom:none;border-radius:5px 5px 0 0}
-/* hojas apiladas (sombra = nº de hojas según contenido) */
-.gfolder.h1{box-shadow:3px 3px 0 0 var(--line)}
-.gfolder.h2{box-shadow:3px 3px 0 0 var(--line), 6px 6px 0 0 var(--paper), 6px 6px 0 1px var(--line)}
-.gfolder.h3{box-shadow:3px 3px 0 0 var(--line), 6px 6px 0 0 var(--paper), 6px 6px 0 1px var(--line), 9px 9px 0 0 var(--paper), 9px 9px 0 1px var(--line)}
+.gwrap{position:relative;padding-top:11px}
+.gwrap .sh{position:absolute;top:0;left:20px;right:20px;height:22px;background:var(--card);border:1px solid var(--line);border-bottom:none;border-radius:5px 5px 0 0;transform-origin:50% 100%;z-index:0}
+.gwrap .sh.s1{transform:rotate(-3.5deg)}
+.gwrap .sh.s2{transform:rotate(-1deg);background:var(--sheet-tint)}
+.gwrap .sh.s3{transform:rotate(2.5deg)}
+.gfolder{position:relative;z-index:1;display:flex;flex-direction:column;width:100%;border:1.5px solid var(--ink);border-radius:6px;background:var(--card);padding:16px 14px 14px;cursor:pointer;text-align:left;font-family:inherit;transition:transform .18s;overflow:visible}
+.gfolder:hover{transform:translateY(-3px)}
+.gfolder::before{content:"";position:absolute;top:-11px;left:12px;width:54px;height:11px;background:var(--card);border:1.5px solid var(--ink);border-bottom:none;border-radius:5px 5px 0 0}
 .gfolder.open{background:var(--accent);border-color:var(--accent)}
-.gfolder.open .gf-id,.gfolder.open .gf-name,.gfolder.open .gf-hint{color:#fff}
 .gfolder.open::before{background:var(--accent);border-color:var(--accent)}
-.gf-id{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:4px}
+.gfolder.open .fid,.gfolder.open .fname,.gfolder.open .fhint,.gfolder.open .ficon{color:var(--on-accent)}
+.gfolder.open .ficon svg{color:var(--on-accent)}
+.gfolder .frow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.gf-id{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.ficon{display:inline-flex;color:var(--accent)}
+.ficon svg{width:17px;height:17px}
 .gf-name{font-family:Fraunces,Georgia,serif;font-size:1rem;font-weight:600;margin-bottom:6px}
-.gf-hint{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--muted);margin-top:8px}
+.gf-hint{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--muted);margin-top:auto}
 
-/* ---- folder detail panels (inline, multiple open) ---- */
-.panels{display:grid;gap:16px;margin-top:24px}
+/* ---- folder detail panels ---- */
+.panels{display:grid;gap:16px;margin-top:26px}
 .panel{border:1.5px solid var(--ink);border-radius:8px;background:var(--card);overflow:hidden}
 .panel[hidden]{display:none}
 .panel .ph{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1.5px dashed var(--line);background:var(--paper)}
+.panel .ph .ph-ic{display:inline-flex;color:var(--accent)}
+.panel .ph .ph-ic svg{width:19px;height:19px}
 .panel .ph .pid{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.08em;border:1px solid var(--line);border-radius:3px;padding:2px 7px;background:var(--card)}
 .panel .ph h3{font-size:1.05rem;font-weight:600;flex:1}
 .panel .ph .close{border:none;background:none;font-family:"JetBrains Mono",monospace;font-size:14px;cursor:pointer;color:var(--muted);padding:4px 8px}
 .panel .ph .close:hover{color:var(--ink)}
 .panel .pb{padding:20px 18px}
-.panel .pb>p.lead{font-family:Fraunces,Georgia,serif;font-size:1.05rem;font-weight:500;line-height:1.35;max-width:52ch;margin-bottom:18px;color:var(--ink)}
+.panel .pb>p.lead{font-family:Fraunces,Georgia,serif;font-size:1.05rem;font-weight:500;line-height:1.35;max-width:56ch;margin-bottom:18px;color:var(--ink)}
 
-/* ---- content blocks inside panels ---- */
+/* ---- content blocks ---- */
 .meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:18px}
 @media(min-width:560px){.meta-grid{grid-template-columns:repeat(4,1fr)}}
 .meta-cell{background:var(--card);padding:10px 12px}
 .meta-cell dt{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
 .meta-cell dd{margin:0;font-size:13px;font-weight:500}
-
 .impact-grid{display:grid;grid-template-columns:1fr;gap:14px}
 @media(min-width:640px){.impact-grid{grid-template-columns:repeat(2,1fr)}}
 .impact{border:1px solid var(--line);border-radius:6px;padding:16px;background:var(--paper)}
 .impact .tag{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp);border:1px solid var(--stamp);padding:2px 7px;border-radius:3px;display:inline-block;margin-bottom:10px}
 .impact h4{font-size:1rem;font-weight:600;margin-bottom:6px}
-.impact p{font-size:13.5px;color:var(--muted);margin-bottom:10px}
-.impact .link{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:500;color:var(--accent-ink)}
-
+.impact p{font-size:13.5px;color:var(--muted);margin-bottom:0}
 .fichas{display:grid;gap:12px}
 .ficha{border:1px solid var(--line);border-radius:6px;background:var(--paper);overflow:hidden}
 .ficha summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:12px;background:var(--card)}
@@ -113,10 +143,9 @@ a.btn:hover{border-bottom-color:transparent}
 .ficha .fcaret{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);transition:transform .2s}
 .ficha[open] .fcaret{transform:rotate(90deg)}
 .ficha .fbody{padding:14px 16px 16px}
-.ficha p{font-size:13.5px;color:var(--muted)}
+.ficha p{font-size:13.5px;color:var(--muted);margin-bottom:0}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .chip{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink);border:1px solid var(--line);padding:2px 7px;border-radius:3px;background:var(--card)}
-
 .flow{display:grid;gap:0}
 .record{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--paper)}
 .record .rid{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
@@ -124,7 +153,6 @@ a.btn:hover{border-bottom-color:transparent}
 .record .org{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--accent-ink);margin-bottom:2px}
 .record .when{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted);margin-bottom:8px}
 .record p{font-size:13.5px;margin:0}
-
 .score-wrap{overflow-x:auto;border:1px solid var(--ink);border-radius:6px;background:var(--card)}
 table.score{width:100%;border-collapse:collapse;font-size:13px;min-width:460px}
 table.score th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 14px;border-bottom:1.5px solid var(--ink);font-weight:700}
@@ -141,14 +169,36 @@ table.score .evt{color:var(--muted);font-size:12.5px}
 .list-block ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 .list-block li{font-family:"JetBrains Mono",monospace;font-size:11px;border:1px solid var(--line);padding:2px 8px;border-radius:3px;background:var(--card)}
 .contact-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-
-footer{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 40px;text-align:center;color:var(--muted);font-size:13px}
+footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:56px;padding:32px 0 40px;text-align:center;color:var(--muted);font-size:13px;background:var(--veil)}
 footer a{color:var(--ink)}
 footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;margin-top:6px;color:var(--muted)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .bglayer{transition:none}
+}
 </style>
+<script>
+(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',t==='dark'?'#141210':'#f6f1e7');}catch(e){}})();
+</script>
 </head>
 <body>
 <a href="#contenido" class="skip">Saltar al contenido</a>
+
+<!-- fondo rotatorio -->
+<div class="bgcycle" aria-hidden="true">
+  <div class="bglayer active" id="lyRain"><div class="rain" data-rain></div></div>
+  <div class="bglayer" id="lyBraille"><div class="braille" data-braille></div></div>
+  <div class="bglayer" id="lyIcons">
+    <div class="gridbg"></div>
+    <span class="float" style="top:16%;left:11%" data-ic="braille"></span>
+    <span class="float" style="top:28%;right:14%;animation-delay:1.6s;color:var(--stamp)" data-ic="code"></span>
+    <span class="float" style="top:63%;left:20%;animation-delay:2.6s" data-ic="weather"></span>
+    <span class="float" style="top:74%;right:22%;animation-delay:.8s;color:var(--muted)" data-ic="cursor"></span>
+    <span class="float" style="top:47%;left:54%;animation-delay:3.4s;color:var(--stamp)" data-ic="book"></span>
+  </div>
+</div>
 
 <header class="topbar">
   <div class="inner">
@@ -157,6 +207,7 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
       <a href="#carpetas">Carpetas</a>
       <a href="https://github.com/Chantynp/" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.linkedin.com/in/snpdev" target="_blank" rel="noopener">LinkedIn</a>
+      <button id="themeToggle" class="btn" type="button">Modo claro</button>
       <a href="mailto:stevensafras123@gmail.com" class="btn">Contactar</a>
     </nav>
   </div>
@@ -164,77 +215,83 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
 
 <main id="contenido">
 
-<!-- COVER -->
 <section class="cover">
   <div class="container">
     <p class="role">Desarrollador Fullstack de IA · Xalapa, Veracruz</p>
     <h1>Santiago Navarro Pulido</h1>
-    <p class="sub">No me gusta describirme con adjetivos. Mejor abre las carpetas y mira lo que construyo: algoritmos, IA y código al servicio de personas reales.</p>
+    <p class="sub">Estoy estudiando Ingeniería de Software y trabajo haciendo aplicaciones con IA. Me apasiona la tecnología, me gusta aprender siempre y construir cosas que le sirvan a mi comunidad.</p>
     <div class="cta">
       <a href="CV.pdf" download class="btn primary">Descargar CV</a>
     </div>
   </div>
 </section>
 
-<!-- FOLDER GRID -->
 <section id="carpetas" style="padding:24px 0 8px">
   <div class="container">
     <div class="folders-head">
       <h2 class="serif">Expediente</h2>
-      <div class="tools">
-        <button id="toggleAll" class="btn primary">Abrir todas</button>
-      </div>
+      <button id="toggleAll" class="btn primary">Abrir todas</button>
     </div>
-    <div class="grid" role="tablist" aria-label="Carpetas del portafolio">
-      <button class="gfolder h1" data-f="perfil" role="tab" aria-expanded="false" aria-controls="p-perfil">
-        <div class="gf-id">CASO 01</div>
-        <div class="gf-name">Perfil</div>
-        <div class="gf-hint">abrir ›</div>
-      </button>
-      <button class="gfolder h3" data-f="proyectos" role="tab" aria-expanded="false" aria-controls="p-proyectos">
-        <div class="gf-id">CASO 02</div>
-        <div class="gf-name">Proyectos</div>
-        <div class="gf-hint">abrir ›</div>
-      </button>
-      <button class="gfolder h3" data-f="trayectoria" role="tab" aria-expanded="false" aria-controls="p-trayectoria">
-        <div class="gf-id">CASO 03</div>
-        <div class="gf-name">Trayectoria</div>
-        <div class="gf-hint">abrir ›</div>
-      </button>
-      <button class="gfolder h2" data-f="creditos" role="tab" aria-expanded="false" aria-controls="p-creditos">
-        <div class="gf-id">CASO 04</div>
-        <div class="gf-name">Créditos</div>
-        <div class="gf-hint">abrir ›</div>
-      </button>
+    <div class="grid" aria-label="Carpetas del portafolio">
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="perfil" aria-expanded="false" aria-controls="p-perfil">
+          <span class="frow"><span class="gf-id">01</span><span class="ficon" data-ic="id"></span></span>
+          <span class="gf-name">Perfil</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="proyectos" aria-expanded="false" aria-controls="p-proyectos">
+          <span class="frow"><span class="gf-id">02</span><span class="ficon" data-ic="code"></span></span>
+          <span class="gf-name">Proyectos</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="trayectoria" aria-expanded="false" aria-controls="p-trayectoria">
+          <span class="frow"><span class="gf-id">03</span><span class="ficon" data-ic="route"></span></span>
+          <span class="gf-name">Trayectoria</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="creditos" aria-expanded="false" aria-controls="p-creditos">
+          <span class="frow"><span class="gf-id">04</span><span class="ficon" data-ic="medal"></span></span>
+          <span class="gf-name">Créditos</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PANELS -->
 <div class="container">
   <div class="panels">
 
-    <!-- PERFIL -->
     <section class="panel" id="p-perfil" hidden aria-label="Carpeta Perfil">
-      <div class="ph"><span class="pid">CASO 01</span><h3>Perfil</h3><button class="close" data-close="perfil" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="ph"><span class="ph-ic" data-ic="id"></span><span class="pid">01</span><h3>Perfil</h3><button class="close" data-close="perfil" aria-label="Cerrar carpeta">✕</button></div>
       <div class="pb">
-        <p class="lead">Soy ingeniero en formación y desarrollador en ejercicio. Vengo de las olimpiadas de informática y física; hoy llevo esos algoritmos a productos reales con IA, visión por computadora y apps móviles.</p>
+        <p class="lead">Soy estudiante y desarrollador. La programación es algo que haría toda la vida: me apasiona, sigo aprendiendo y disfruto apoyando a otros en el camino. Trato a la gente con amabilidad y empatía, y me gusta decidir con criterio.</p>
         <dl class="meta-grid">
           <div class="meta-cell"><dt>Ubicación</dt><dd>Xalapa, Veracruz</dd></div>
           <div class="meta-cell"><dt>Especialidad</dt><dd>Fullstack · IA</dd></div>
           <div class="meta-cell"><dt>Idiomas</dt><dd>ES · EN (B2)</dd></div>
-          <div class="meta-cell"><dt>Estado</dt><dd>Abierto a retos</dd></div>
+          <div class="meta-cell"><dt>Estado</dt><dd>En aprendizaje</dd></div>
         </dl>
         <div class="impact-grid">
           <div class="impact">
             <span class="tag">Cómo trabajo</span>
-            <h4>Algoritmo primero, producto después</h4>
-            <p>Escribo código limpio, con tests y revisado como Pull Request. La competición me enseñó a pensar en complejidad; la ingeniería, en mantenibilidad.</p>
+            <h4>Código y aprendizaje</h4>
+            <p>Escribo código limpio y con tests, revisado como Pull Request. Disfruto aprender con la gente y ayudar cuando puedo; creo que se aprende mejor acompañado.</p>
           </div>
           <div class="impact">
             <span class="tag">Para quién</span>
-            <h4>Personas y comunidades reales</h4>
-            <p>Mis proyectos nacen de necesidades locales: transporte en Xalapa, accesibilidad para personas con discapacidad visual. La IA es el medio, no el fin.</p>
+            <h4>Comunidad</h4>
+            <p>Mis proyectos nacen de necesidades de mi gente: transporte en Xalapa y accesibilidad para personas con discapacidad visual. Quiero dejar cosas interesantes que ayuden de verdad.</p>
           </div>
         </div>
         <div class="contact-row">
@@ -246,18 +303,17 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
       </div>
     </section>
 
-    <!-- PROYECTOS -->
     <section class="panel" id="p-proyectos" hidden aria-label="Carpeta Proyectos">
-      <div class="ph"><span class="pid">CASO 02</span><h3>Proyectos</h3><button class="close" data-close="proyectos" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="ph"><span class="ph-ic" data-ic="code"></span><span class="pid">02</span><h3>Proyectos</h3><button class="close" data-close="proyectos" aria-label="Cerrar carpeta">✕</button></div>
       <div class="pb">
-        <p class="lead">Cosas que existen porque las programé, no porque las imaginé. Cada una con stack, enlace y propósito.</p>
+        <p class="lead">Tres proyectos publicados o documentados, con su stack y su enlace. Cada uno resuelve algo concreto.</p>
         <div class="fichas">
           <details class="ficha">
             <summary><span class="fid">PRJ-01</span><span class="ftitle">Vive Xalapa</span><span class="fcaret">›</span></summary>
             <div class="fbody">
               <p>Movilidad urbana para xalapeños: rutas de transporte en tiempo real, guía turística y noticias locales. Publicada en Google Play.</p>
               <div class="chips"><span class="chip">React Native</span><span class="chip">Expo</span><span class="chip">Firebase</span></div>
-              <a href="https://play.google.com/store/apps/details?id=com.chantynp.xalapaconnectmvp" target="_blank" rel="noopener" class="link mono" style="font-size:11px;font-weight:500">Ver en Google Play →</a>
+              <a href="https://play.google.com/store/apps/details?id=com.chantynp.xalapaconnectmvp" target="_blank" rel="noopener" class="mono" style="font-size:11px;font-weight:500">Ver en Google Play →</a>
             </div>
           </details>
           <details class="ficha">
@@ -265,7 +321,7 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
             <div class="fbody">
               <p>Accesibilidad tangible: hardware Arduino con backend Python, comunicación serial en tiempo real y texto a voz para personas con discapacidad visual.</p>
               <div class="chips"><span class="chip">C++</span><span class="chip">Python</span><span class="chip">Arduino</span></div>
-              <a href="https://drive.google.com/file/d/17hFNcN9kDabZXnT45OV7Bjrj11-c-tRZ/view" target="_blank" rel="noopener" class="link mono" style="font-size:11px;font-weight:500">Ver proyecto en Drive →</a>
+              <a href="https://drive.google.com/file/d/17hFNcN9kDabZXnT45OV7Bjrj11-c-tRZ/view" target="_blank" rel="noopener" class="mono" style="font-size:11px;font-weight:500">Ver proyecto en Drive →</a>
             </div>
           </details>
           <details class="ficha">
@@ -273,18 +329,17 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
             <div class="fbody">
               <p>Blog técnico: proyectos de ingeniería de software y tutoriales de estructuras de datos, lógica algorítmica y código limpio.</p>
               <div class="chips"><span class="chip">Educación</span><span class="chip">Comunidad</span></div>
-              <a href="https://thesrprogrammer.blogspot.com" target="_blank" rel="noopener" class="link mono" style="font-size:11px;font-weight:500">Leer blog →</a>
+              <a href="https://thesrprogrammer.blogspot.com" target="_blank" rel="noopener" class="mono" style="font-size:11px;font-weight:500">Leer blog →</a>
             </div>
           </details>
         </div>
       </div>
     </section>
 
-    <!-- TRAYECTORIA -->
     <section class="panel" id="p-trayectoria" hidden aria-label="Carpeta Trayectoria">
-      <div class="ph"><span class="pid">CASO 03</span><h3>Trayectoria</h3><button class="close" data-close="trayectoria" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="ph"><span class="ph-ic" data-ic="route"></span><span class="pid">03</span><h3>Trayectoria</h3><button class="close" data-close="trayectoria" aria-label="Cerrar carpeta">✕</button></div>
       <div class="pb">
-        <p class="lead">De competencias de programación a código en producción. La línea de tiempo de un desarrollador que no se queda en el algoritmo.</p>
+        <p class="lead">Empecé en olimpiadas de informática y física; hoy trabajo como desarrollador y sigo estudiando. Siempre aprendiendo algo nuevo.</p>
         <div class="flow">
           <article class="record">
             <p class="rid">EXP-01 · Experiencia</p>
@@ -312,16 +367,13 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
       </div>
     </section>
 
-    <!-- CRÉDITOS -->
     <section class="panel" id="p-creditos" hidden aria-label="Carpeta Créditos">
-      <div class="ph"><span class="pid">CASO 04</span><h3>Créditos</h3><button class="close" data-close="creditos" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="ph"><span class="ph-ic" data-ic="medal"></span><span class="pid">04</span><h3>Créditos</h3><button class="close" data-close="creditos" aria-label="Cerrar carpeta">✕</button></div>
       <div class="pb">
-        <p class="lead">Los números y medallas que respaldan lo anterior. No son el logro; son la prueba del trabajo.</p>
+        <p class="lead">Medallas en olimpiadas de informática, IA y física, además del stack y los idiomas que manejo.</p>
         <div class="score-wrap">
           <table class="score">
-            <thead>
-              <tr><th>#</th><th>Año</th><th>Distinción</th><th>Evento</th></tr>
-            </thead>
+            <thead><tr><th>#</th><th>Año</th><th>Distinción</th><th>Evento</th></tr></thead>
             <tbody>
               <tr><td class="rank">01</td><td class="yr">2025</td><td class="dist">Medalla de Plata</td><td class="evt">OMIA — 1ra Olimpiada Mexicana de Inteligencia Artificial</td></tr>
               <tr><td class="rank">02</td><td class="yr">2024</td><td class="dist">Medalla de Oro</td><td class="evt">OVI — Olimpiada Veracruzana de Informática</td></tr>
@@ -340,9 +392,7 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
           </div>
           <div class="list-block">
             <h4>Idiomas</h4>
-            <ul>
-              <li>Español — nativo</li><li>Inglés — B2 (EXAVER 2)</li>
-            </ul>
+            <ul><li>Español — nativo</li><li>Inglés — B2 (EXAVER 2)</li></ul>
           </div>
         </div>
         <div class="contact-row" style="margin-top:16px">
@@ -368,6 +418,80 @@ footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spa
 </script>
 
 <script>
+// ---- iconos SVG (línea, trazo 1.5) ----
+var ICONS={
+  id:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.5-1.4 1.7-2 3-2s2.5.6 3 2"/><path d="M14.5 10h4M14.5 13.5h4"/></svg>',
+  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg>',
+  route:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M8.2 6H14a3 3 0 0 1 0 6H10a3 3 0 0 0 0 6h5.8"/></svg>',
+  medal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l2 6M16 3l-2 6"/><circle cx="12" cy="15" r="4.5"/><path d="M12 13.2l.9 1.7 1.9.3-1.4 1.3.3 1.9-1.7-.9-1.7.9.3-1.9-1.4-1.3 1.9-.3z"/></svg>',
+  braille:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.5"/><circle cx="8" cy="12" r="1.5"/><circle cx="8" cy="18" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>',
+  weather:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.6"/><path d="M8 2.5V4M3.4 8H2M4.8 4.8L3.8 3.8M11.2 4.8l1-1"/><path d="M8.5 19a3.5 3.5 0 0 1 .4-7 5 5 0 0 1 9.4 1.2A3.2 3.2 0 0 1 17.4 19z"/></svg>',
+  cursor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l12 5.2-5 1.8-1.8 5z"/><path d="M13 13l4.5 4.5"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8.5 4.5 6 4.5A1.5 1.5 0 0 0 4.5 6v11A1.5 1.5 0 0 1 6 15.5c2.5 0 4.5.5 6 2 1.5-1.5 3.5-2 6-2a1.5 1.5 0 0 1 1.5 1.5V6A1.5 1.5 0 0 0 18 4.5c-2.5 0-4.5.5-6 2z"/><path d="M12 6.5v11"/></svg>'
+};
+document.querySelectorAll('[data-ic]').forEach(function(el){el.innerHTML=ICONS[el.getAttribute('data-ic')]||'';});
+
+// ---- fondo: lluvia de código ----
+(function(){
+  var box=document.querySelector('[data-rain]');if(!box)return;
+  var chars='{}<>/=;[]()01|&:_.=>-+*#';
+  for(var c=0;c<18;c++){
+    var col=document.createElement('span');col.className='rain-col';
+    col.style.left=(c*5.7)+'%';
+    col.style.animationDuration=(10+Math.random()*9)+'s';
+    col.style.animationDelay=(-Math.random()*14)+'s';
+    col.style.fontSize=(10+Math.random()*5)+'px';
+    var t='';for(var i=0;i<28;i++){t+=chars[Math.floor(Math.random()*chars.length)]+'\n';}
+    col.textContent=t;box.appendChild(col);
+  }
+})();
+
+// ---- fondo: puntos braille ----
+(function(){
+  var box=document.querySelector('[data-braille]');if(!box)return;
+  var cols=16,rows=9;box.style.gridTemplateColumns='repeat('+cols+',1fr)';box.style.gridTemplateRows='repeat('+rows+',1fr)';
+  for(var i=0;i<cols*rows;i++){
+    var d=document.createElement('div');d.className='bd';
+    var dot=document.createElement('i');d.appendChild(dot);
+    if(Math.random()<0.3){d.classList.add('on');dot.style.animationDelay=(Math.random()*2.8)+'s';}
+    box.appendChild(d);
+  }
+})();
+
+// ---- fondo: rotación código → braille → íconos ----
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(reduce)return;
+  var layers=['lyRain','lyBraille','lyIcons'],i=0;
+  setInterval(function(){
+    document.getElementById(layers[i]).classList.remove('active');
+    i=(i+1)%layers.length;
+    document.getElementById(layers[i]).classList.add('active');
+  },9000);
+})();
+
+// ---- tema: oscuro (principal) / claro (secundario) ----
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themeToggle');
+  if(!btn)return;
+  function cur(){return root.getAttribute('data-theme')||'dark';}
+  function sync(){
+    var t=cur();
+    btn.textContent=t==='dark'?'Modo claro':'Modo oscuro';
+    btn.setAttribute('aria-label',t==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro');
+    var m=document.querySelector('meta[name=theme-color]');
+    if(m)m.setAttribute('content',t==='dark'?'#141210':'#f6f1e7');
+  }
+  btn.addEventListener('click',function(){
+    var n=cur()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',n);
+    try{localStorage.setItem('theme',n);}catch(e){}
+    sync();
+  });
+  sync();
+})();
+
+// ---- carpetas: abrir/cerrar ----
 (function(){
   var folders=document.querySelectorAll('.gfolder');
   var panels={perfil:document.getElementById('p-perfil'),proyectos:document.getElementById('p-proyectos'),trayectoria:document.getElementById('p-trayectoria'),creditos:document.getElementById('p-creditos')};
