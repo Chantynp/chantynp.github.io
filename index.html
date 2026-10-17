@@ -1,403 +1,520 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Santiago Navarro Pulido — Desarrollador Fullstack de IA, estudiante de Ingeniería de Software y competidor en olimpiadas de programación.">
-    <title>Santiago Navarro | Desarrollador Fullstack de IA</title>
-    <!-- Tailwind CSS CDN para un estilo moderno y responsivo -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Santiago Navarro Pulido — Desarrollador Fullstack de IA en Xalapa, Veracruz. Visión por computadora, agentes, apps móviles y tecnología accesible." />
+<title>Santiago Navarro Pulido — Desarrollador Fullstack de IA</title>
+<link rel="canonical" href="https://chantynp.github.io/" />
+<meta name="theme-color" content="#141210" />
+<meta property="og:title" content="Santiago Navarro Pulido — Desarrollador Fullstack de IA" />
+<meta property="og:description" content="Visión por computadora, agentes, apps móviles y tecnología accesible. Xalapa, Veracruz, México." />
+<meta property="og:type" content="website" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  /* tema oscuro (principal) */
+  --paper:#141210;--card:#1e1a16;--ink:#f2ede4;--muted:#a99f8d;--line:#38312a;
+  --accent:#eda15a;--accent-ink:#f0b475;--accent-bg:#e89a4e;--accent-bg-hover:#f0ad67;--on-accent:#1b1815;
+  --stamp:#8ac475;--soft:#2a251f;--grid:#2a2620;--sheet-tint:#262019;--veil:rgba(20,18,16,.94);--link-line:rgba(237,161,90,.35);
+}
+:root[data-theme="light"]{
+  /* tema claro (secundario) */
+  --paper:#f6f1e7;--card:#fffdf8;--ink:#1b1815;--muted:#6b6152;--line:#ddd3c0;
+  --accent:#b45309;--accent-ink:#8a3f07;--accent-bg:#b45309;--accent-bg-hover:#8a3f07;--on-accent:#ffffff;
+  --stamp:#3f6212;--soft:#e8e0d0;--grid:#e3d9c6;--sheet-tint:#f4ede0;--veil:rgba(246,241,231,.94);--link-line:rgba(180,83,9,.3);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{background:transparent;color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;line-height:1.6}
+.serif{font-family:Fraunces,Georgia,serif}
+.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0}
+p{margin:0 0 1rem}
+a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid var(--link-line)}
+a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.container{max-width:880px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.skip:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;padding:8px 12px;background:var(--ink);color:var(--paper);z-index:60}
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+/* ---- fondo rotatorio (código → braille → íconos) ---- */
+.bgcycle{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bglayer{position:absolute;inset:0;opacity:0;transition:opacity 2s ease}
+.bglayer.active{opacity:1}
+.rain{position:absolute;inset:0;overflow:hidden}
+.rain-col{position:absolute;top:0;white-space:pre;font-family:"JetBrains Mono",monospace;font-size:12px;line-height:1.5;color:var(--ink);opacity:.08;animation:fall linear infinite;will-change:transform}
+@keyframes fall{from{transform:translateY(-50%)}to{transform:translateY(50%)}}
+.braille{position:absolute;inset:0;display:grid;opacity:.4}
+.bd{display:flex;align-items:center;justify-content:center}
+.bd i{width:7px;height:7px;border-radius:50%;background:var(--line);display:block}
+.bd.on i{background:var(--accent);animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.2;transform:scale(.85)}50%{opacity:.9;transform:scale(1.15)}}
+.gridbg{position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;opacity:.55}
+.float{position:absolute;color:var(--accent);opacity:.15;animation:floaty 7s ease-in-out infinite}
+.float svg{display:block;width:34px;height:34px}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
-            scroll-behavior: smooth;
-        }
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .glass {
-            /* Estilo Glassmorphism ligero para los contenedores */
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .gradient-text {
-            /* Texto con gradiente para destacar */
-            background: linear-gradient(to right, #60a5fa, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+/* ---- topbar ---- */
+.topbar{position:sticky;top:0;z-index:40;background:var(--veil);border-bottom:1px solid var(--line)}
+.topbar .inner{max-width:880px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--ink)}
+.brand span{color:var(--muted);font-weight:400}
+.nav-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.nav-links a{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.04em;color:var(--muted)}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a.btn{color:var(--accent);border-bottom:none}
+
+main{position:relative;z-index:1}
+
+/* ---- cover ---- */
+.cover{padding:56px 0 40px}
+.cover .role{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.cover h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+.cover .sub{color:var(--ink);font-size:1.05rem;max-width:50ch;margin-bottom:24px}
+.cover .cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.04em;padding:9px 14px;border-radius:4px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent-bg);color:var(--on-accent);border-color:var(--accent-bg)}
+.btn.primary:hover{background:var(--accent-bg-hover);border-color:var(--accent-bg-hover)}
+a.btn{border-bottom:1px solid transparent}
+a.btn:hover{border-bottom-color:transparent}
+
+/* ---- folder grid ---- */
+.folders-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.folders-head h2{font-size:1.2rem;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 18px;padding:22px 0 8px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}}
+.gwrap{position:relative;padding-top:11px}
+.gwrap .sh{position:absolute;top:0;left:20px;right:20px;height:22px;background:var(--card);border:1px solid var(--line);border-bottom:none;border-radius:5px 5px 0 0;transform-origin:50% 100%;z-index:0}
+.gwrap .sh.s1{transform:rotate(-3.5deg)}
+.gwrap .sh.s2{transform:rotate(-1deg);background:var(--sheet-tint)}
+.gwrap .sh.s3{transform:rotate(2.5deg)}
+.gfolder{position:relative;z-index:1;display:flex;flex-direction:column;width:100%;border:1.5px solid var(--ink);border-radius:6px;background:var(--card);padding:16px 14px 14px;cursor:pointer;text-align:left;font-family:inherit;transition:transform .18s;overflow:visible}
+.gfolder:hover{transform:translateY(-3px)}
+.gfolder::before{content:"";position:absolute;top:-11px;left:12px;width:54px;height:11px;background:var(--card);border:1.5px solid var(--ink);border-bottom:none;border-radius:5px 5px 0 0}
+.gfolder.open{background:var(--accent);border-color:var(--accent)}
+.gfolder.open::before{background:var(--accent);border-color:var(--accent)}
+.gfolder.open .fid,.gfolder.open .fname,.gfolder.open .fhint,.gfolder.open .ficon{color:var(--on-accent)}
+.gfolder.open .ficon svg{color:var(--on-accent)}
+.gfolder .frow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.gf-id{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.ficon{display:inline-flex;color:var(--accent)}
+.ficon svg{width:17px;height:17px}
+.gf-name{font-family:Fraunces,Georgia,serif;font-size:1rem;font-weight:600;margin-bottom:6px}
+.gf-hint{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--muted);margin-top:auto}
+
+/* ---- folder detail panels ---- */
+.panels{display:grid;gap:16px;margin-top:26px}
+.panel{border:1.5px solid var(--ink);border-radius:8px;background:var(--card);overflow:hidden}
+.panel[hidden]{display:none}
+.panel .ph{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1.5px dashed var(--line);background:var(--paper)}
+.panel .ph .ph-ic{display:inline-flex;color:var(--accent)}
+.panel .ph .ph-ic svg{width:19px;height:19px}
+.panel .ph .pid{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.08em;border:1px solid var(--line);border-radius:3px;padding:2px 7px;background:var(--card)}
+.panel .ph h3{font-size:1.05rem;font-weight:600;flex:1}
+.panel .ph .close{border:none;background:none;font-family:"JetBrains Mono",monospace;font-size:14px;cursor:pointer;color:var(--muted);padding:4px 8px}
+.panel .ph .close:hover{color:var(--ink)}
+.panel .pb{padding:20px 18px}
+.panel .pb>p.lead{font-family:Fraunces,Georgia,serif;font-size:1.05rem;font-weight:500;line-height:1.35;max-width:56ch;margin-bottom:18px;color:var(--ink)}
+
+/* ---- content blocks ---- */
+.meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:18px}
+@media(min-width:560px){.meta-grid{grid-template-columns:repeat(4,1fr)}}
+.meta-cell{background:var(--card);padding:10px 12px}
+.meta-cell dt{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.meta-cell dd{margin:0;font-size:13px;font-weight:500}
+.impact-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.impact-grid{grid-template-columns:repeat(2,1fr)}}
+.impact{border:1px solid var(--line);border-radius:6px;padding:16px;background:var(--paper)}
+.impact .tag{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp);border:1px solid var(--stamp);padding:2px 7px;border-radius:3px;display:inline-block;margin-bottom:10px}
+.impact h4{font-size:1rem;font-weight:600;margin-bottom:6px}
+.impact p{font-size:13.5px;color:var(--muted);margin-bottom:0}
+.fichas{display:grid;gap:12px}
+.ficha{border:1px solid var(--line);border-radius:6px;background:var(--paper);overflow:hidden}
+.ficha summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:12px;background:var(--card)}
+.ficha summary::-webkit-details-marker{display:none}
+.ficha summary:hover{background:var(--soft)}
+.ficha[open] summary{border-bottom:1px dashed var(--line)}
+.ficha .fid{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.06em;flex-shrink:0;border:1px solid var(--line);border-radius:4px;padding:2px 6px;background:var(--paper)}
+.ficha .ftitle{font-family:Fraunces,Georgia,serif;font-size:0.95rem;font-weight:600;flex:1}
+.ficha .fcaret{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);transition:transform .2s}
+.ficha[open] .fcaret{transform:rotate(90deg)}
+.ficha .fbody{padding:14px 16px 16px}
+.ficha p{font-size:13.5px;color:var(--muted);margin-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chip{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink);border:1px solid var(--line);padding:2px 7px;border-radius:3px;background:var(--card)}
+.flow{display:grid;gap:0}
+.record{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--paper)}
+.record .rid{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.record h4{font-size:1rem;font-weight:600;margin-bottom:2px}
+.record .org{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--accent-ink);margin-bottom:2px}
+.record .when{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted);margin-bottom:8px}
+.record p{font-size:13.5px;margin:0}
+.score-wrap{overflow-x:auto;border:1px solid var(--ink);border-radius:6px;background:var(--card)}
+table.score{width:100%;border-collapse:collapse;font-size:13px;min-width:460px}
+table.score th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 14px;border-bottom:1.5px solid var(--ink);font-weight:700}
+table.score td{padding:10px 14px;border-bottom:1px solid var(--soft);vertical-align:top}
+table.score tr:last-child td{border-bottom:none}
+table.score .rank{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--accent);width:34px}
+table.score .yr{font-family:"JetBrains Mono",monospace;color:var(--muted);white-space:nowrap}
+table.score .dist{font-weight:600}
+table.score .evt{color:var(--muted);font-size:12.5px}
+.two-col{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
+@media(min-width:640px){.two-col{grid-template-columns:1fr 1fr}}
+.list-block{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--paper)}
+.list-block h4{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700}
+.list-block ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.list-block li{font-family:"JetBrains Mono",monospace;font-size:11px;border:1px solid var(--line);padding:2px 8px;border-radius:3px;background:var(--card)}
+.contact-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:56px;padding:32px 0 40px;text-align:center;color:var(--muted);font-size:13px;background:var(--veil)}
+footer a{color:var(--ink)}
+footer .fmono{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;margin-top:6px;color:var(--muted)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .bglayer{transition:none}
+}
+</style>
+<script>
+(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',t==='dark'?'#141210':'#f6f1e7');}catch(e){}})();
+</script>
 </head>
-<body class="selection:bg-blue-500 selection:text-white">
+<body>
+<a href="#contenido" class="skip">Saltar al contenido</a>
 
-    <!-- Navegación Fija -->
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="font-mono font-bold text-xl tracking-tighter">
-                <span class="text-blue-500">&lt;</span>
-                SNP
-                <span class="text-blue-500">/&gt;</span>
-            </div>
-            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-                <a href="#about" class="hover:text-white transition-colors">Sobre mí</a>
-                <a href="#experience" class="hover:text-white transition-colors">Experiencia</a>
-                <a href="#achievements" class="hover:text-white transition-colors">Logros</a>
-                <a href="#projects" class="hover:text-white transition-colors">Proyectos</a>
-                <a href="#education" class="hover:text-white transition-colors">Educación</a>
-            </div>
-            <a href="mailto:stevensafras123@gmail.com" class="px-4 py-2 bg-white text-black text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors shadow-lg">
-                Contactar
-            </a>
-        </div>
+<!-- fondo rotatorio -->
+<div class="bgcycle" aria-hidden="true">
+  <div class="bglayer active" id="lyRain"><div class="rain" data-rain></div></div>
+  <div class="bglayer" id="lyBraille"><div class="braille" data-braille></div></div>
+  <div class="bglayer" id="lyIcons">
+    <div class="gridbg"></div>
+    <span class="float" style="top:16%;left:11%" data-ic="braille"></span>
+    <span class="float" style="top:28%;right:14%;animation-delay:1.6s;color:var(--stamp)" data-ic="code"></span>
+    <span class="float" style="top:63%;left:20%;animation-delay:2.6s" data-ic="weather"></span>
+    <span class="float" style="top:74%;right:22%;animation-delay:.8s;color:var(--muted)" data-ic="cursor"></span>
+    <span class="float" style="top:47%;left:54%;animation-delay:3.4s;color:var(--stamp)" data-ic="book"></span>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="inner">
+    <div class="brand">SNP <span>/ PORTAFOLIO</span></div>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#carpetas">Carpetas</a>
+      <a href="https://github.com/Chantynp/" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/snpdev" target="_blank" rel="noopener">LinkedIn</a>
+      <button id="themeToggle" class="btn" type="button">Modo claro</button>
+      <a href="mailto:stevensafras123@gmail.com" class="btn">Contactar</a>
     </nav>
+  </div>
+</header>
 
-    <!-- Sección Principal (Hero) -->
-    <header id="about" class="pt-40 pb-20 px-6 max-w-4xl mx-auto">
-        <div class="animate-in fade-in slide-in-from-top-20 duration-1000">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-6">
-                <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-                Estudiante de Ingeniería de Software
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
-                Transformando algoritmos en <br>
-                <span class="gradient-text">soluciones reales.</span>
-            </h1>
-            <p class="text-xl text-gray-400 max-w-2xl leading-relaxed mb-8">
-                Soy <strong class="text-white">Santiago Navarro Pulido</strong>. Desarrollador de IA enfocado en agentes inteligentes, visión computacional y aplicaciones móviles, con una base sólida en olimpiadas de programación y resolución de problemas de alto rendimiento.
-            </p>
+<main id="contenido">
 
-            <div class="flex gap-4">
-                <a href="https://www.linkedin.com/in/snpdev" target="_blank" class="p-3 glass rounded-full hover:bg-white/10 transition-colors text-gray-300 hover:text-white" aria-label="LinkedIn">
-                    <!-- Icono de LinkedIn (SVG) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-                </a>
-                <a href="https://github.com/Chantynp/" target="_blank" class="p-3 glass rounded-full hover:bg-white/10 transition-colors text-gray-300 hover:text-white" aria-label="GitHub">
-                    <!-- Icono de GitHub (SVG) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                </a>
-                <a href="https://thesrprogrammer.blogspot.com" target="_blank" class="p-3 glass rounded-full hover:bg-white/10 transition-colors text-gray-300 hover:text-white" aria-label="Blog The SR Programmer">
-                    <!-- Icono de Blog (SVG) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                </a>
-                <a href="CV.pdf" download class="p-3 glass rounded-full hover:bg-white/10 transition-colors text-gray-300 hover:text-white" aria-label="Descargar mi CV">
-                    <!-- Icono de Curriculum (SVG) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>
-                </a>
-            </div>
+<section class="cover">
+  <div class="container">
+    <p class="role">Desarrollador Fullstack de IA · Xalapa, Veracruz</p>
+    <h1>Santiago Navarro Pulido</h1>
+    <p class="sub">Estoy estudiando Ingeniería de Software y trabajo haciendo aplicaciones con IA. Me apasiona la tecnología, me gusta aprender siempre y construir cosas que le sirvan a mi comunidad.</p>
+    <div class="cta">
+      <a href="CV.pdf" download class="btn primary">Descargar CV</a>
+    </div>
+  </div>
+</section>
+
+<section id="carpetas" style="padding:24px 0 8px">
+  <div class="container">
+    <div class="folders-head">
+      <h2 class="serif">Expediente</h2>
+      <button id="toggleAll" class="btn primary">Abrir todas</button>
+    </div>
+    <div class="grid" aria-label="Carpetas del portafolio">
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="perfil" aria-expanded="false" aria-controls="p-perfil">
+          <span class="frow"><span class="gf-id">01</span><span class="ficon" data-ic="id"></span></span>
+          <span class="gf-name">Perfil</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="proyectos" aria-expanded="false" aria-controls="p-proyectos">
+          <span class="frow"><span class="gf-id">02</span><span class="ficon" data-ic="code"></span></span>
+          <span class="gf-name">Proyectos</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="trayectoria" aria-expanded="false" aria-controls="p-trayectoria">
+          <span class="frow"><span class="gf-id">03</span><span class="ficon" data-ic="route"></span></span>
+          <span class="gf-name">Trayectoria</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+      <div class="gwrap">
+        <span class="sh s1"></span><span class="sh s2"></span><span class="sh s3"></span>
+        <button class="gfolder" data-f="creditos" aria-expanded="false" aria-controls="p-creditos">
+          <span class="frow"><span class="gf-id">04</span><span class="ficon" data-ic="medal"></span></span>
+          <span class="gf-name">Créditos</span>
+          <span class="gf-hint">abrir ›</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="panels">
+
+    <section class="panel" id="p-perfil" hidden aria-label="Carpeta Perfil">
+      <div class="ph"><span class="ph-ic" data-ic="id"></span><span class="pid">01</span><h3>Perfil</h3><button class="close" data-close="perfil" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="pb">
+        <p class="lead">Soy estudiante y desarrollador. La programación es algo que haría toda la vida: me apasiona, sigo aprendiendo y disfruto apoyando a otros en el camino. Trato a la gente con amabilidad y empatía, y me gusta decidir con criterio.</p>
+        <dl class="meta-grid">
+          <div class="meta-cell"><dt>Ubicación</dt><dd>Xalapa, Veracruz</dd></div>
+          <div class="meta-cell"><dt>Especialidad</dt><dd>Fullstack · IA</dd></div>
+          <div class="meta-cell"><dt>Idiomas</dt><dd>ES · EN (B2)</dd></div>
+          <div class="meta-cell"><dt>Estado</dt><dd>En aprendizaje</dd></div>
+        </dl>
+        <div class="impact-grid">
+          <div class="impact">
+            <span class="tag">Cómo trabajo</span>
+            <h4>Código y aprendizaje</h4>
+            <p>Escribo código limpio y con tests, revisado como Pull Request. Disfruto aprender con la gente y ayudar cuando puedo; creo que se aprende mejor acompañado.</p>
+          </div>
+          <div class="impact">
+            <span class="tag">Para quién</span>
+            <h4>Comunidad</h4>
+            <p>Mis proyectos nacen de necesidades de mi gente: transporte en Xalapa y accesibilidad para personas con discapacidad visual. Quiero dejar cosas interesantes que ayuden de verdad.</p>
+          </div>
         </div>
-    </header>
-
-    <!-- Stack Tecnológico -->
-    <section class="border-y border-white/5 bg-white/[0.02]">
-        <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="space-y-2">
-                <h3 class="text-sm font-mono text-gray-500">Lenguajes Core</h3>
-                <div class="flex items-center gap-2 text-lg font-semibold">
-                    <!-- Icono Terminal -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-blue-500"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-                    C++, Python, SQL, JS
-                </div>
-            </div>
-            <div class="space-y-2">
-                <h3 class="text-sm font-mono text-gray-500">Backend</h3>
-                <div class="flex items-center gap-2 text-lg font-semibold">
-                    <!-- Icono Servidor -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-500"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-                    FastAPI, Redis, Docker
-                </div>
-            </div>
-            <div class="space-y-2">
-                <h3 class="text-sm font-mono text-gray-500">IA & Visión</h3>
-                <div class="flex items-center gap-2 text-lg font-semibold">
-                    <!-- Icono CPU -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-orange-500"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                    YOLO, n8n, Scikit-Learn
-                </div>
-            </div>
-            <div class="space-y-2">
-                <h3 class="text-sm font-mono text-gray-500">Móvil & Hardware</h3>
-                <div class="flex items-center gap-2 text-lg font-semibold">
-                    <!-- Icono Smartphone -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-purple-500"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                    React Native, Arduino
-                </div>
-            </div>
+        <div class="contact-row">
+          <a href="https://github.com/Chantynp/" target="_blank" rel="noopener" class="btn">GitHub</a>
+          <a href="https://www.linkedin.com/in/snpdev" target="_blank" rel="noopener" class="btn">LinkedIn</a>
+          <a href="https://thesrprogrammer.blogspot.com" target="_blank" rel="noopener" class="btn">Blog</a>
+          <a href="mailto:stevensafras123@gmail.com" class="btn">stevensafras123@gmail.com</a>
         </div>
+      </div>
     </section>
 
-    <!-- SECCIÓN: Experiencia Profesional/Prácticas -->
-    <section id="experience" class="py-24 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><rect x="3" y="10" width="18" height="12" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/><path d="M12 17v-3"/></svg>
-            Experiencia Profesional
-        </h2>
+    <section class="panel" id="p-proyectos" hidden aria-label="Carpeta Proyectos">
+      <div class="ph"><span class="ph-ic" data-ic="code"></span><span class="pid">02</span><h3>Proyectos</h3><button class="close" data-close="proyectos" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="pb">
+        <p class="lead">Tres proyectos publicados o documentados, con su stack y su enlace. Cada uno resuelve algo concreto.</p>
+        <div class="fichas">
+          <details class="ficha">
+            <summary><span class="fid">PRJ-01</span><span class="ftitle">Vive Xalapa</span><span class="fcaret">›</span></summary>
+            <div class="fbody">
+              <p>Movilidad urbana para xalapeños: rutas de transporte en tiempo real, guía turística y noticias locales. Publicada en Google Play.</p>
+              <div class="chips"><span class="chip">React Native</span><span class="chip">Expo</span><span class="chip">Firebase</span></div>
+              <a href="https://play.google.com/store/apps/details?id=com.chantynp.xalapaconnectmvp" target="_blank" rel="noopener" class="mono" style="font-size:11px;font-weight:500">Ver en Google Play →</a>
+            </div>
+          </details>
+          <details class="ficha">
+            <summary><span class="fid">PRJ-02</span><span class="ftitle">Teclado Braille</span><span class="fcaret">›</span></summary>
+            <div class="fbody">
+              <p>Accesibilidad tangible: hardware Arduino con backend Python, comunicación serial en tiempo real y texto a voz para personas con discapacidad visual.</p>
+              <div class="chips"><span class="chip">C++</span><span class="chip">Python</span><span class="chip">Arduino</span></div>
+              <a href="https://drive.google.com/file/d/17hFNcN9kDabZXnT45OV7Bjrj11-c-tRZ/view" target="_blank" rel="noopener" class="mono" style="font-size:11px;font-weight:500">Ver proyecto en Drive →</a>
+            </div>
+          </details>
+          <details class="ficha">
+            <summary><span class="fid">PRJ-03</span><span class="ftitle">The SR Programmer</span><span class="fcaret">›</span></summary>
+            <div class="fbody">
+              <p>Blog técnico: proyectos de ingeniería de software y tutoriales de estructuras de datos, lógica algorítmica y código limpio.</p>
+              <div class="chips"><span class="chip">Educación</span><span class="chip">Comunidad</span></div>
+              <a href="https://thesrprogrammer.blogspot.com" target="_blank" rel="noopener" class="mono" style="font-size:11px;font-weight:500">Leer blog →</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
 
-        <!-- Experiencia en TechX MX -->
-        <div class="glass p-8 rounded-xl border border-white/5 hover:border-white/20 transition-all duration-300">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                <h3 class="text-2xl font-bold text-white">Desarrollador Fullstack de IA</h3>
-                <span class="text-sm font-mono text-gray-500 mt-2 md:mt-0">Jul 2025 — Jun 2026</span>
-            </div>
-            <div class="text-lg text-blue-400 font-semibold mb-4">
-                TechX MX — Hermosillo, Sonora, México (Remoto)
-            </div>
-            <ul class="text-gray-400 space-y-3 leading-relaxed">
-                <li class="flex gap-3">
-                    <span class="text-blue-400 font-mono">▸</span>
-                    Desarrollé soluciones empresariales de IA construyendo agentes con n8n y entrenando modelos de visión computacional (YOLO, PaddleOCR) mediante Label Studio para segmentación de imágenes y extracción de datos.
-                </li>
-                <li class="flex gap-3">
-                    <span class="text-blue-400 font-mono">▸</span>
-                    Construí y mantuve servicios backend con FastAPI, Redis y Strapi, optimizando procesos y automatizando el cálculo de KPIs mediante scripts.
-                </li>
-                <li class="flex gap-3">
-                    <span class="text-blue-400 font-mono">▸</span>
-                    Gestioné control de versiones con Git/GitHub, liderando múltiples Pull Requests hacia entornos de producción.
-                </li>
-                <li class="flex gap-3">
-                    <span class="text-blue-400 font-mono">▸</span>
-                    Aseguré fiabilidad y calidad del sistema con pruebas aisladas en Docker y análisis profundo de logs para detectar y resolver errores.
-                </li>
+    <section class="panel" id="p-trayectoria" hidden aria-label="Carpeta Trayectoria">
+      <div class="ph"><span class="ph-ic" data-ic="route"></span><span class="pid">03</span><h3>Trayectoria</h3><button class="close" data-close="trayectoria" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="pb">
+        <p class="lead">Empecé en olimpiadas de informática y física; hoy trabajo como desarrollador y sigo estudiando. Siempre aprendiendo algo nuevo.</p>
+        <div class="flow">
+          <article class="record">
+            <p class="rid">EXP-01 · Experiencia</p>
+            <h4>Desarrollador Fullstack de IA</h4>
+            <p class="org">TechX MX · Hermosillo (remoto)</p>
+            <p class="when">Jul 2025 — Jun 2026</p>
+            <p>Agentes con n8n y visión computacional (YOLO, PaddleOCR) mediante Label Studio; backend FastAPI, Redis y Strapi; automatización de KPIs, Docker y Pull Requests a producción.</p>
+          </article>
+          <article class="record">
+            <p class="rid">EDU-01 · Formación</p>
+            <h4>Ingeniería de Software</h4>
+            <p class="org">Universidad Veracruzana</p>
+            <p class="when">Ago 2025 — Ago 2029 · en curso</p>
+            <p>Licenciatura en Ingeniería de Software.</p>
+          </article>
+          <article class="record">
+            <p class="rid">EDU-02 · Formación</p>
+            <h4>Certificado de Bachillerato</h4>
+            <p class="org">COBAEV</p>
+            <p class="when">Ago 2022 — Jul 2025</p>
+            <p>Colegio de Bachilleres del Estado de Veracruz.</p>
+          </article>
+        </div>
+        <p style="margin-top:18px;font-size:13.5px"><a href="https://drive.google.com/drive/u/1/folders/1-tipyUoz_2v4DsNmOwWxEdLK7oTSJrKf" target="_blank" rel="noopener">Ver constancias y reconocimientos →</a></p>
+      </div>
+    </section>
+
+    <section class="panel" id="p-creditos" hidden aria-label="Carpeta Créditos">
+      <div class="ph"><span class="ph-ic" data-ic="medal"></span><span class="pid">04</span><h3>Créditos</h3><button class="close" data-close="creditos" aria-label="Cerrar carpeta">✕</button></div>
+      <div class="pb">
+        <p class="lead">Medallas en olimpiadas de informática, IA y física, además del stack y los idiomas que manejo.</p>
+        <div class="score-wrap">
+          <table class="score">
+            <thead><tr><th>#</th><th>Año</th><th>Distinción</th><th>Evento</th></tr></thead>
+            <tbody>
+              <tr><td class="rank">01</td><td class="yr">2025</td><td class="dist">Medalla de Plata</td><td class="evt">OMIA — 1ra Olimpiada Mexicana de Inteligencia Artificial</td></tr>
+              <tr><td class="rank">02</td><td class="yr">2024</td><td class="dist">Medalla de Oro</td><td class="evt">OVI — Olimpiada Veracruzana de Informática</td></tr>
+              <tr><td class="rank">03</td><td class="yr">2023</td><td class="dist">Medalla de Bronce</td><td class="evt">OVF — 33ra Olimpiada Veracruzana de Física</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="two-col">
+          <div class="list-block">
+            <h4>Stack</h4>
+            <ul>
+              <li>Python</li><li>FastAPI</li><li>React Native</li><li>Expo</li>
+              <li>YOLO</li><li>PaddleOCR</li><li>n8n</li><li>Redis</li>
+              <li>Strapi</li><li>Docker</li><li>Firebase</li><li>Arduino</li>
             </ul>
-            <div class="mt-6 flex flex-wrap gap-2">
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">n8n</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">YOLO</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">PaddleOCR</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">FastAPI</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">Redis</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">Strapi</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">Docker</span>
-                <span class="text-xs font-mono px-2 py-1 bg-gray-700/50 rounded-full text-white">Git/GitHub</span>
-            </div>
+          </div>
+          <div class="list-block">
+            <h4>Idiomas</h4>
+            <ul><li>Español — nativo</li><li>Inglés — B2 (EXAVER 2)</li></ul>
+          </div>
         </div>
+        <div class="contact-row" style="margin-top:16px">
+          <a href="https://drive.google.com/drive/u/1/folders/1-tipyUoz_2v4DsNmOwWxEdLK7oTSJrKf" target="_blank" rel="noopener" class="btn">Ver constancias</a>
+        </div>
+      </div>
     </section>
 
-    <section id="achievements" class="py-24 px-6 max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row gap-12">
-            <div class="md:w-1/3">
-                <h2 class="text-3xl font-bold mb-4">Trayectoria Competitiva</h2>
-                <p class="text-gray-400 leading-relaxed mb-6">
-                    Mi base algorítmica y mi enfoque en la solución de problemas complejos se forjaron en las Olimpiadas de alto rendimiento.
-                </p>
-                <a href="https://drive.google.com/drive/folders/1-tipyUoz_2v4DsNmOwWxEdLK7oTSJrKf?usp=drive_link" target="_blank" class="inline-block px-4 py-2 bg-white text-black text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors shadow-lg">
-                    Ver constancias
-                </a>
-            </div>
-            <div class="md:w-2/3 grid gap-4">
-                <div class="glass p-6 rounded-xl border border-white/5 hover:border-white/20 transition-all group">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-white/5 rounded-lg group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-gray-400"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start gap-4">
-                                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Medalla de Plata</h3>
-                                <span class="text-xs font-mono text-gray-500 whitespace-nowrap">2025</span>
-                            </div>
-                            <p class="text-sm text-blue-200/80 font-mono mb-2">1ra Olimpiada Mexicana de Inteligencia Artificial (OMIA)</p>
-                            <p class="text-gray-400 text-sm">Competencia nacional de algoritmos de IA y Machine Learning.</p>
-                        </div>
-                    </div>
-                </div>
+  </div>
+</div>
 
-                <div class="glass p-6 rounded-xl border border-white/5 hover:border-white/20 transition-all group">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-white/5 rounded-lg group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-yellow-400"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start gap-4">
-                                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Medalla de Oro</h3>
-                                <span class="text-xs font-mono text-gray-500 whitespace-nowrap">2024</span>
-                            </div>
-                            <p class="text-sm text-blue-200/80 font-mono mb-2">29va Olimpiada Veracruzana de Informática (OVI)</p>
-                            <p class="text-gray-400 text-sm">Primer lugar estatal en resolución de problemas algorítmicos.</p>
-                        </div>
-                    </div>
-                </div>
+<footer>
+  <div class="container">
+    <p>Diseñado y desarrollado por Santiago Navarro Pulido · 2026</p>
+    <p class="fmono">XALAPA, VERACRUZ · <a href="https://github.com/Chantynp/" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/snpdev" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://thesrprogrammer.blogspot.com" target="_blank" rel="noopener">Blog</a></p>
+  </div>
+</footer>
 
-                <div class="glass p-6 rounded-xl border border-white/5 hover:border-white/20 transition-all group">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-white/5 rounded-lg group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-blue-400"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start gap-4">
-                                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Mención Honorífica</h3>
-                                <span class="text-xs font-mono text-gray-500 whitespace-nowrap">2024</span>
-                            </div>
-                            <p class="text-sm text-blue-200/80 font-mono mb-2">29va Olimpiada Mexicana de Informática (OMI)</p>
-                            <p class="text-gray-400 text-sm">Reconocimiento a nivel nacional.</p>
-                        </div>
-                    </div>
-                </div>
+</main>
 
-                <div class="glass p-6 rounded-xl border border-white/5 hover:border-white/20 transition-all group">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-white/5 rounded-lg group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-orange-400"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start gap-4">
-                                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Medalla de Bronce</h3>
-                                <span class="text-xs font-mono text-gray-500 whitespace-nowrap">2023</span>
-                            </div>
-                            <p class="text-sm text-blue-200/80 font-mono mb-2">33ra Olimpiada Veracruzana de Física (OVF)</p>
-                            <p class="text-gray-400 text-sm">Destreza en resolución de problemas físicos y matemáticos.</p>
-                        </div>
-                    </div>
-                </div>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Santiago Navarro Pulido","jobTitle":"Desarrollador Fullstack de IA","url":"https://chantynp.github.io/","sameAs":["https://github.com/Chantynp/","https://www.linkedin.com/in/snpdev","https://thesrprogrammer.blogspot.com"],"address":{"addressLocality":"Xalapa","addressRegion":"Veracruz","addressCountry":"MX"},"knowsAbout":["Inteligencia artificial","Visión por computadora","Desarrollo móvil","Accesibilidad"]}
+</script>
 
-            </div>
-        </div>
-    </section>
+<script>
+// ---- iconos SVG (línea, trazo 1.5) ----
+var ICONS={
+  id:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.5-1.4 1.7-2 3-2s2.5.6 3 2"/><path d="M14.5 10h4M14.5 13.5h4"/></svg>',
+  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg>',
+  route:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M8.2 6H14a3 3 0 0 1 0 6H10a3 3 0 0 0 0 6h5.8"/></svg>',
+  medal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l2 6M16 3l-2 6"/><circle cx="12" cy="15" r="4.5"/><path d="M12 13.2l.9 1.7 1.9.3-1.4 1.3.3 1.9-1.7-.9-1.7.9.3-1.9-1.4-1.3 1.9-.3z"/></svg>',
+  braille:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.5"/><circle cx="8" cy="12" r="1.5"/><circle cx="8" cy="18" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>',
+  weather:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.6"/><path d="M8 2.5V4M3.4 8H2M4.8 4.8L3.8 3.8M11.2 4.8l1-1"/><path d="M8.5 19a3.5 3.5 0 0 1 .4-7 5 5 0 0 1 9.4 1.2A3.2 3.2 0 0 1 17.4 19z"/></svg>',
+  cursor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l12 5.2-5 1.8-1.8 5z"/><path d="M13 13l4.5 4.5"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8.5 4.5 6 4.5A1.5 1.5 0 0 0 4.5 6v11A1.5 1.5 0 0 1 6 15.5c2.5 0 4.5.5 6 2 1.5-1.5 3.5-2 6-2a1.5 1.5 0 0 1 1.5 1.5V6A1.5 1.5 0 0 0 18 4.5c-2.5 0-4.5.5-6 2z"/><path d="M12 6.5v11"/></svg>'
+};
+document.querySelectorAll('[data-ic]').forEach(function(el){el.innerHTML=ICONS[el.getAttribute('data-ic')]||'';});
 
-    <!-- Sección Proyectos -->
-    <section id="projects" class="py-24 px-6 bg-white/[0.02]">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 flex items-center gap-3">
-                <!-- Icono Code -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                Proyectos Destacados
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
+// ---- fondo: lluvia de código ----
+(function(){
+  var box=document.querySelector('[data-rain]');if(!box)return;
+  var chars='{}<>/=;[]()01|&:_.=>-+*#';
+  for(var c=0;c<18;c++){
+    var col=document.createElement('span');col.className='rain-col';
+    col.style.left=(c*5.7)+'%';
+    col.style.animationDuration=(10+Math.random()*9)+'s';
+    col.style.animationDelay=(-Math.random()*14)+'s';
+    col.style.fontSize=(10+Math.random()*5)+'px';
+    var t='';for(var i=0;i<28;i++){t+=chars[Math.floor(Math.random()*chars.length)]+'\n';}
+    col.textContent=t;box.appendChild(col);
+  }
+})();
 
-                <div class="glass rounded-2xl overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-blue-900/50 transition-all duration-300">
-                    <div class="p-6 flex-1">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/10">
-                                Publicado (Google Play)
-                            </div>
-                            <a href="https://play.google.com/store/apps/details?id=com.chantynp.xalapaconnectmvp" target="_blank" class="text-gray-400 hover:text-white" aria-label="Ver en Google Play">
-                                <!-- Icono External Link -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                            </a>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Vive Xalapa</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">
-                            Aplicación de movilidad con rutas de transporte en tiempo real, guía turística y noticias locales para Xalapa. Tecnologías de bases de datos, consumo de APIs y desarrollo ágil.
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 mt-auto">
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-xs text-blue-300 font-mono">#React Native</span>
-                            <span class="text-xs text-blue-300 font-mono">#Firebase</span>
-                            <span class="text-xs text-blue-300 font-mono">#Expo</span>
-                        </div>
-                    </div>
-                </div>
+// ---- fondo: puntos braille ----
+(function(){
+  var box=document.querySelector('[data-braille]');if(!box)return;
+  var cols=16,rows=9;box.style.gridTemplateColumns='repeat('+cols+',1fr)';box.style.gridTemplateRows='repeat('+rows+',1fr)';
+  for(var i=0;i<cols*rows;i++){
+    var d=document.createElement('div');d.className='bd';
+    var dot=document.createElement('i');d.appendChild(dot);
+    if(Math.random()<0.3){d.classList.add('on');dot.style.animationDelay=(Math.random()*2.8)+'s';}
+    box.appendChild(d);
+  }
+})();
 
-                <div class="glass rounded-2xl overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-blue-900/50 transition-all duration-300">
-                    <div class="p-6 flex-1">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="text-xs font-bold px-2 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/10">
-                                Hardware & Accesibilidad
-                            </div>
-                            <a href="https://drive.google.com/file/d/17hFNcN9kDabZXnT45OV7Bjrj11-c-tRZ" target="_blank" class="text-gray-400 hover:text-white" aria-label="Ver Demo">
-                                <!-- Icono External Link -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                            </a>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Teclado Braille</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">
-                            Prototipo funcional que integra Arduino con un backend en Python, comunicación serial en tiempo real y texto a voz para accesibilidad de usuarios con discapacidad visual.
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 mt-auto">
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-xs text-blue-300 font-mono">#C++</span>
-                            <span class="text-xs text-blue-300 font-mono">#Python</span>
-                            <span class="text-xs text-blue-300 font-mono">#Arduino</span>
-                        </div>
-                    </div>
-                </div>
+// ---- fondo: rotación código → braille → íconos ----
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(reduce)return;
+  var layers=['lyRain','lyBraille','lyIcons'],i=0;
+  setInterval(function(){
+    document.getElementById(layers[i]).classList.remove('active');
+    i=(i+1)%layers.length;
+    document.getElementById(layers[i]).classList.add('active');
+  },9000);
+})();
 
-                <div class="glass rounded-2xl overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-blue-900/50 transition-all duration-300">
-                    <div class="p-6 flex-1">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="text-xs font-bold px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/10">
-                                Blog & Contenido
-                            </div>
-                            <a href="https://thesrprogrammer.blogspot.com" target="_blank" class="text-gray-400 hover:text-white" aria-label="Ir al Blog">
-                                <!-- Icono External Link -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                            </a>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">The SR Programmer</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">
-                            Blog personal donde documento mi aprendizaje y comparto tutoriales, buscando inspirar y contribuir a la comunidad de desarrolladores.
-                        </p>
-                    </div>
-                    <div class="p-6 pt-0 mt-auto">
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-xs text-blue-300 font-mono">#Blogging</span>
-                            <span class="text-xs text-blue-300 font-mono">#Education</span>
-                            <span class="text-xs text-blue-300 font-mono">#Community</span>
-                        </div>
-                    </div>
-                </div>
+// ---- tema: oscuro (principal) / claro (secundario) ----
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themeToggle');
+  if(!btn)return;
+  function cur(){return root.getAttribute('data-theme')||'dark';}
+  function sync(){
+    var t=cur();
+    btn.textContent=t==='dark'?'Modo claro':'Modo oscuro';
+    btn.setAttribute('aria-label',t==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro');
+    var m=document.querySelector('meta[name=theme-color]');
+    if(m)m.setAttribute('content',t==='dark'?'#141210':'#f6f1e7');
+  }
+  btn.addEventListener('click',function(){
+    var n=cur()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',n);
+    try{localStorage.setItem('theme',n);}catch(e){}
+    sync();
+  });
+  sync();
+})();
 
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Educación -->
-    <section id="education" class="py-24 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 flex items-center gap-3">
-            <!-- Icono Graduation Cap -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            Educación
-        </h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="glass p-8 rounded-xl border border-white/5 hover:border-white/20 transition-all duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-bold text-white">Ingeniería de Software</h3>
-                    <span class="text-sm font-mono text-gray-500 mt-2 md:mt-0">Ago 2025 — Ago 2029</span>
-                </div>
-                <div class="text-lg text-blue-400 font-semibold mb-3">Universidad Veracruzana</div>
-                <p class="text-gray-400 text-sm">Licenciatura en Ingeniería de Software (Esperado).</p>
-            </div>
-            <div class="glass p-8 rounded-xl border border-white/5 hover:border-white/20 transition-all duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-bold text-white">Certificado de Bachillerato</h3>
-                    <span class="text-sm font-mono text-gray-500 mt-2 md:mt-0">Ago 2022 — Jul 2025</span>
-                </div>
-                <div class="text-lg text-blue-400 font-semibold mb-3">COBAEV</div>
-                <p class="text-gray-400 text-sm">Colegio de Bachilleres del Estado de Veracruz.</p>
-            </div>
-        </div>
-
-        <!-- Idiomas -->
-        <div class="mt-8 glass p-8 rounded-xl border border-white/5 hover:border-white/20 transition-all duration-300">
-            <h3 class="text-xl font-bold text-white mb-4">Idiomas</h3>
-            <div class="flex flex-wrap gap-6">
-                <div>
-                    <div class="text-sm text-gray-400 mb-1">Español</div>
-                    <div class="text-lg font-semibold text-white">Nativo</div>
-                </div>
-                <div>
-                    <div class="text-sm text-gray-400 mb-1">Inglés</div>
-                    <div class="text-lg font-semibold text-white">Intermedio (B2 — EXAVER 2)</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 px-6 border-t border-white/5 text-center">
-        <p class="text-gray-500 text-sm mb-2">
-            Diseñado y Desarrollado por Santiago Navarro
-        </p>
-        <p class="text-xs text-gray-600 font-mono">
-            Hecho con HTML & Tailwind CSS • 2026
-        </p>
-    </footer>
-
+// ---- carpetas: abrir/cerrar ----
+(function(){
+  var folders=document.querySelectorAll('.gfolder');
+  var panels={perfil:document.getElementById('p-perfil'),proyectos:document.getElementById('p-proyectos'),trayectoria:document.getElementById('p-trayectoria'),creditos:document.getElementById('p-creditos')};
+  var toggleAll=document.getElementById('toggleAll');
+  function allOpen(){return Object.keys(panels).every(function(k){return !panels[k].hidden;});}
+  function syncBtn(){toggleAll.textContent=allOpen()?'Cerrar todas':'Abrir todas';}
+  function toggle(name,force){
+    var p=panels[name];if(!p)return;
+    var open=force!==undefined?force:p.hidden;
+    p.hidden=!open;
+    var btn=document.querySelector('.gfolder[data-f="'+name+'"]');
+    if(btn){btn.classList.toggle('open',open);btn.setAttribute('aria-expanded',open);}
+    syncBtn();
+  }
+  folders.forEach(function(b){b.addEventListener('click',function(){toggle(b.dataset.f);});});
+  document.querySelectorAll('[data-close]').forEach(function(x){x.addEventListener('click',function(e){e.stopPropagation();toggle(x.dataset.close,false);});});
+  toggleAll.addEventListener('click',function(){
+    var open=!allOpen();
+    Object.keys(panels).forEach(function(k){toggle(k,open);});
+    if(open)document.getElementById('carpetas').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  syncBtn();
+})();
+</script>
 </body>
 </html>
